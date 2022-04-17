@@ -1,15 +1,17 @@
 import React from "react";
-import { Post } from "../../components/Post";
-import { useEffect } from 'react';
-import { useSelector } from "react-redux";
-import { 
-  selectPosts,
-  isLoading, 
-  loadingFailed } from "./feedSlice";
+// import { Post } from "../../components/Post";
+// import { useEffect } from 'react';
+// import { useSelector, useDispatch } from "react-redux";
+// import { 
+//   selectPosts,
+//   isLoading, 
+//   didNotLoad} from "./feedSlice";
 
 // useEffect() is needed to load the feed when the component will mount
-// Posts will be determined by the feedSlice of state
-// <Feed/> will pass slice data to posts through props
+// Posts will be determined by subreddit or search term filter
+// useEffect() will re-render when these filters change
+
+// <Feed/> will pass slice data to <Post/>'s through props
 
 export function Feed() {
   

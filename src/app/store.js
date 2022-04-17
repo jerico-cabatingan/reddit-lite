@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { feedSlice } from '../features/feed/feedSlice';
-import { subRedditSlice } from '../features/subReddits/subRedditsSlice';
+import feedReducer from '../features/feed/feedSlice';
+import subredditsReducer from '../features/subreddits/subredditsSlice';
+import commentsReducer from '../features/comments/commentsSlice';
 
 export const store = configureStore({
   reducer: {
     feed: feedReducer,
-    subReddits: subRedditsReducer
+    subreddits: subredditsReducer,
+    comments: commentsReducer,
   },
 });

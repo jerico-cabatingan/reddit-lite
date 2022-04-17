@@ -12,3 +12,13 @@ export function SubReddit() {
     </div>
   )
 }
+
+
+
+const subredditObjectData = {
+  id: '',
+  icon_img: '',
+  display_name_prefixed: '',
+  url: '',
+  subscribers: null // number of subscribers
+}

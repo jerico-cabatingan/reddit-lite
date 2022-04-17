@@ -1,51 +1,62 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import subRedditsSlice from '../subReddits/subRedditsSlice';
 
-// action to load posts 
-// will declare async thunk action creator to retrieve data from the api
-// will include loading and error states
+// async action creator fetches json data from url, will be dispatched inside
+// the subreddit and search component
+export const getSubredditPosts = createAsyncThunk('feed/getSubredditPosts', 
+  async (subreddit) => {
+    const response = await fetch(`https://www.reddit.com${subreddit}.json`);
+    const json = await response.json();
+    return json.data.children.map((post) => post.data);
+})
 
-// action to filter post via search term
-// action to filter posts via subreddit
-
-// rememeber to export relevant selectors and action creators
-// hook up the reducer to the store
-
-export const getPosts = createAsyncThunk('feed/getPosts',
-  async (arg, ThunkAPI) => {
-    const response = await fetch('url');
-    const json = await response.json() ;
-    return json;
-  }
-)
 
 const feedSlice = createSlice({
   name: 'feed',
   initialState: {
-    posts: {},
+    posts: [],
+    subredditFilter: '/r/interestingasfuck/',
+    searchFilter: '',
+    showComments: false, 
     isLoading: false,
-    loadingFailed: false
+    didNotLoad: false,
+    
   },
   reducers: {
-    filterBySearchTerm: (state, action) => {},
-    filterBySubReddit: (state, action) => {}
+    filterBySearchTerm: (state, action) => {
+      state.searchFilter = action.payload
+    },
+    filterBySubReddit: (state, action) => {
+      state.subredditFilter = action.payload
+    },
+    showComments: (state) => {
+      state.showComments = !state.showComments
+    }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPosts.pending, (state) => {
-
+      .addCase(getSubredditPosts.pending, (state) => {
+        state.isLoading = true;
+        state.didNotLoad = false;
       })
-      .addCase(getPosts.fulfilled, (state, action) => {
-
+      .addCase(getSubredditPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.didNotLoad = false;
+        state.posts = action.payload;
       })
-      .addCase(getPosts.rejected, (state) => {
-        
+      .addCase(getSubredditPosts.rejected, (state) => {
+        state.isLoading = false;
+        state.didNotLoad = true;
       })
     }
 })
 
-export const {filterBySearchTerm, filterBySubReddit} = feedSlice.actions;
-export const loadingFailed = state => state.feed.loadingFailed;
-export const isLoading = state => state.feed.isLoading;
-export const selectPosts = state => state.feed.posts;
+export const {filterBySearchTerm, filterBySubReddit, showComments} = feedSlice.actions;
+export const selectPosts = state => state.feed.posts; 
+export const selectDidNotLoad = state => state.feed.didNotLoad;
+export const selectIsLoading = state => state.feed.isLoading;
+export const selectSearchFilter = state => state.feed.searchFilter;
+export const selectSubredditFilter = state => state.feed.subredditFilter;
+export const selectShowComments = state => state.feed.showComments;
 export default feedSlice.reducer;
+
+
