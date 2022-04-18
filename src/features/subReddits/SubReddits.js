@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from  "react-redux";
+import { useSelector, useDispatch} from  "react-redux";
+import { SubReddit } from "./SubReddit";
  import {
   selectSubreddits,
   isLoading,
@@ -19,28 +20,44 @@ export function Subreddits() {
   
   useEffect(() => {
     dispatch(getSubreddits())
-  }, []);
+  }, [dispatch]);
 
-  console.log(subreddits)
- 
+  if (loading) {
+    return <h3>Subreddits are loading...</h3>
+  }
 
-  return(
-    <div className='#'>
-      {/* map over the subreddits array and render <SubReddit/> for each subreddit */}
-    </div>
+  if (loadingError) {
+    return (
+    <>
+      <h3>There was an error. Please try again</h3>
+      <button onClick={dispatchEvent(getSubreddits())}>Refresh</button>
+    </>
+    )
+  }
+
+  return (
+    <>
+      <h3 style={{fontSize: 35}}>Subreddits</h3>
+      <ul className='subreddits-list' style={{listStyle: "none"}}>
+        {
+        subreddits.map((subreddit, index)=>
+          <li key={index}>
+            <SubReddit 
+              subreddit={subreddit}
+              key={subreddit.id}/>
+          </li>)
+        }
+      </ul>
+    </>
   )
 }
 
 // const subRedditPostsArray = [{}, {}, {}, {}, {}]
 
-// const postObjectData = {
-//   author: '',
-//   title: '',
-//   created_utc: 0, // convert to human readable date
+// const subredditObjectData = {
 //   id: '',
-//   subreddit: '',
+//   icon_img: '',
+//   display_name_prefixed: '',
 //   url: '',
-//   permalink: '', // path for comment retrieval
-//   is_video: null,
-//   num_comments: 0
+//   subscribers: null // number of subscribers
 // }

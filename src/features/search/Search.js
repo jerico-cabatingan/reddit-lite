@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterBySearchTerm } from "../feed/feedSlice";
+import { selectSearchFilter } from "../feed/feedSlice";
 
 export function Search() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(' ');
   const dispatch = useDispatch();
+  const searchTermSliceData = useSelector(selectSearchFilter)
+
+  useEffect(() => 
+    console.log(searchTermSliceData), [searchTerm]) 
+
+  const updateFeed = (term) => {
+    dispatch(filterBySearchTerm(term.toLowerCase()))
+  }
 
   // disptach search filter to render new posts when a new search term is submitted
-  const handleSubmit = ({target}) => {
-    setSearchTerm(target.value);
-    dispatch(filterBySearchTerm(searchTerm.toLowerCase()))
+  const handleChange = ({target}) => {
+    const newTerm = target.value;
+    setSearchTerm(newTerm);
+    updateFeed(newTerm);
   } 
 
   return(
-    <form className='search-bar' onSubmit={handleSubmit}>
-      {/* // will render a <from></form> and use state hooks to send data to searchSlice  */}
-    </form>
+    <header>
+      <input 
+        className='search-input'
+        value={searchTerm}
+        onChange={handleChange}
+        type='text'
+        placeholder='Search Reddit lite!'
+        />
+    </header>
   )
 }

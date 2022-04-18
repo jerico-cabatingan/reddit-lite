@@ -1,6 +1,6 @@
 import React from "react";
 
-// will *likely recieve props from the <Post/>
+// it will display text, usename, and timestamp by extrating state data and passing it down through props
 
 export function Comment() {
   return(
@@ -8,4 +8,10 @@ export function Comment() {
 
     </div>
   )
+}
+
+const commentObjectData = {
+  author: '',
+  body: '',
+  id: ''
 }

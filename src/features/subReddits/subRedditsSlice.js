@@ -1,8 +1,3 @@
-// will declare async thunk action creator to retrieve data from the api
-// will include loading and error states
-// rememeber to export relevant selectors and action creators
-// hook up the reducer to the store
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 
@@ -18,7 +13,7 @@ export const getSubreddits = createAsyncThunk('subreddits/getSubreddits',
 const subredditsSlice = createSlice({
   name: 'subreddits',
   initialState: {
-    subreddits: {},
+    subreddits: [],
     isLoading: false,
     didNotLoad: false,
   },

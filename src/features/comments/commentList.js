@@ -1,6 +1,6 @@
 // this component will map over comments data from comments slice
 // and render a list of <Comment/> components
-// it will display text, usename, and timestamp by extrating state data and passing it down through props
+// will useSelector() to extract comments array from state and pass down objects to <Comment/> as props
 
 import React from 'react'; 
 
@@ -10,10 +10,4 @@ export function CommentList() {
 
     </div>
   )
-}
-
-const commentObjectData = {
-  author: '',
-  body: '',
-  id: ''
 }
