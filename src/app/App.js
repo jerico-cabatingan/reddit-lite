@@ -16,12 +16,15 @@ export default function App() {
   return (
     <>
       <Search/>
-      <div>
-        <Feed/>
-      </div>
-      <aside style={{float: 'right'}}>
-        <Subreddits/>
-      </aside>
+      <main style={{display: 'flex'}}>
+        <div style={{width: '75vw'}}>
+          <Feed/>
+        </div>
+        <aside style={{float: 'right', width: '25vw'}}>
+          <Subreddits/>
+        </aside>
+      </main>
+      
     </>
   )
 }

@@ -14,7 +14,8 @@ export function SubReddit({subreddit}) {
     <div className='subreddit-container'
     style={containerStyle}>
       <img 
-        src={subreddit.icon_img}
+        src={subreddit.icon_img ||
+          'https://i0.wp.com/i.pinimg.com/originals/c7/65/3f/c7653f9e8d1d0e13212970213ebc76f6.png?resize=650,400'}
         style={imgStyle}
         className="subreddit-img"/> 
       <div> 
@@ -30,6 +31,7 @@ const imgStyle = {
   height: 50,
   width: 50,
   borderRadius: 25,
+  boxShadow: "2px 2px 2px 1px #ccc"
 }
 const containerStyle = {
   display: 'inline',

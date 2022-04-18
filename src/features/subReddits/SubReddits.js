@@ -37,7 +37,7 @@ export function Subreddits() {
 
   return (
     <>
-      <h3 style={{fontSize: 35}}>Subreddits</h3>
+      <h3 style={{fontSize: 25}}>Subreddits</h3>
       <ul className='subreddits-list' style={{listStyle: "none"}}>
         {
         subreddits.map((subreddit, index)=>

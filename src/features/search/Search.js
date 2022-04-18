@@ -5,7 +5,7 @@ import { filterBySearchTerm } from "../feed/feedSlice";
 import { selectSearchFilter } from "../feed/feedSlice";
 
 export function Search() {
-  const [searchTerm, setSearchTerm] = useState(' ');
+  const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
   const searchTermSliceData = useSelector(selectSearchFilter)
 
@@ -16,7 +16,6 @@ export function Search() {
     dispatch(filterBySearchTerm(term.toLowerCase()))
   }
 
-  // disptach search filter to render new posts when a new search term is submitted
   const handleChange = ({target}) => {
     const newTerm = target.value;
     setSearchTerm(newTerm);
@@ -24,14 +23,27 @@ export function Search() {
   } 
 
   return(
-    <header>
+    <header style={headerStyle}>
       <input 
         className='search-input'
         value={searchTerm}
         onChange={handleChange}
         type='text'
         placeholder='Search Reddit lite!'
-        />
+        style={searchBarStyle}/>
     </header>
   )
+}
+
+const headerStyle = {
+  padding: 30,
+  backgroundImage: 'linear-gradient(#1a2b40, #ffffff)',
+  textAlign: 'center'
+}
+
+const searchBarStyle = {
+  top: '50%',
+  padding: 10,
+  borderRadius: 20,
+  width: '50vw' 
 }
