@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getSubreddits = createAsyncThunk('subreddits/getSubreddits',
   async () => {
-    const response = await fetch(`https://www.reddit.com/subreddits.json`);
+    const response = await fetch(`https://www.reddit.com/subreddits.json?limit=100`);
     const json = await response.json();
     
     return json.data.children.map((subreddit) => subreddit.data);

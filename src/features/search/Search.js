@@ -9,9 +9,6 @@ export function Search() {
   const dispatch = useDispatch();
   const searchTermSliceData = useSelector(selectSearchFilter)
 
-  useEffect(() => 
-    console.log(searchTermSliceData), [searchTerm]) 
-
   const updateFeed = (term) => {
     dispatch(filterBySearchTerm(term.toLowerCase()))
   }
@@ -45,5 +42,6 @@ const searchBarStyle = {
   top: '50%',
   padding: 10,
   borderRadius: 20,
-  width: '50vw' 
+  width: '50vw',
+  maxWidth: 500
 }

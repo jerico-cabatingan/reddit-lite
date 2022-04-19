@@ -27,16 +27,46 @@ export function Feed() {
   useEffect(() => {
     dispatch(getSubredditPosts(subredditFilter))
     }, [subredditFilter])
+
+  if (loading) {
+    return <h1>Posts are loading...</h1>
+  }
+
+  if (posts.length === 0 || error) {
+    return (
+      <>
+      <h1>Refresh your feed</h1>
+      <button onClick={dispatch(getSubredditPosts(subredditFilter))}>Try Again</button>
+      </>
+    )
+  }
+
+  const renderedPosts = posts.map((post, index) => 
+    <li key={index}>
+      <Post post={post} id={post.id}/>
+    </li>
+    )
+  
+  const applySearchFilter = () => {
+    if (searchFilter.length > 0) {
+      const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchFilter));
+      // console.log(posts)
+      // console.log(searchFilter)
+      // console.log(filteredPosts)
+      return filteredPosts.map((post, index) => 
+        <li key={index}>
+          <Post post={post} id={post.id}/>
+        </li>)
+    } else {
+      return renderedPosts
+    }
+  }
+  
   
   return(
     <div>
       <ul style={postsStyle}>
-        {posts.map((post, index) => 
-          <li key={index}>
-            <Post post={post} id={post.id}/>
-          </li>
-          )
-        }
+        {applySearchFilter()}
       </ul>
     </div>
   )
@@ -44,6 +74,6 @@ export function Feed() {
 
 const postsStyle = {
   listStyleType: 'none',
-  paddingRight: '10vw',
-  paddingLeft: '10vw',
+  paddingRight: '5vw',
+  paddingLeft: '5vw',
 }

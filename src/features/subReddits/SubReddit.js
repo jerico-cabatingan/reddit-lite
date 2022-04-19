@@ -1,4 +1,6 @@
 import React from "react";
+import { filterBySubReddit } from '../../features/feed/feedSlice';
+import { useDispatch } from "react-redux";
 // this action will be used to render new posts when a subreddit is clicked
 // import { filterBySubReddit } from "../features/feed/feedSlice";
 
@@ -6,19 +8,25 @@ import React from "react";
 // will render image, and title
 
 export function SubReddit({subreddit}) {
+  const dispatch = useDispatch();
+  
+  const handleClick = () => {
+    dispatch(filterBySubReddit(subreddit.url))
+  }
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  }
   return(
     <div className='subreddit-container'
-    style={containerStyle}>
+         style={containerStyle}
+         onClick={handleClick}>
       <img 
         src={subreddit.icon_img ||
           'https://i0.wp.com/i.pinimg.com/originals/c7/65/3f/c7653f9e8d1d0e13212970213ebc76f6.png?resize=650,400'}
         style={imgStyle}
         className="subreddit-img"/> 
-      <div> 
+      <div style={{paddingBottom: 10}}> 
         <h4>{subreddit.display_name_prefixed}</h4>
         <h6>Subscribers: {numberWithCommas(subreddit.subscribers)}</h6>
       </div>

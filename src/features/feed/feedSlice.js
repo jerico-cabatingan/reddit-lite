@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // the subreddit and search component
 export const getSubredditPosts = createAsyncThunk('feed/getSubredditPosts', 
   async (subreddit) => {
-    const response = await fetch(`https://www.reddit.com${subreddit}.json`);
+    const response = await fetch(`https://www.reddit.com${subreddit}.json?limit=25`);
     const json = await response.json();
     return json.data.children.map((post) => post.data);
 })
@@ -14,7 +14,7 @@ const feedSlice = createSlice({
   name: 'feed',
   initialState: {
     posts: [],
-    subredditFilter: '/r/interestingasfuck/',
+    subredditFilter: '/r/pics/',
     searchFilter: '',
     showComments: false, 
     isLoading: false,

@@ -1,13 +1,35 @@
-// this component will map over comments data from comments slice
-// and render a list of <Comment/> components
-// will useSelector() to extract comments array from state and pass down objects to <Comment/> as props
+import React from 'react';
+import { Comment } from './Comment';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleComments, selectCommentsShowing } from './commentsSlice';
 
-import React from 'react'; 
+export function CommentList({comments}) {
+  const dispatch = useDispatch();
+  const commentsShowing = useSelector(selectCommentsShowing);
 
-export function CommentList() {
+  const handleClick = () => {
+    dispatch(toggleComments(!commentsShowing))
+  }
+
   return (
-    <div>
-
-    </div>
+    <>
+      <ul style={{listStyle: "none"}}>
+        {comments.map((comment, index) => 
+          <li key={index}>
+            <Comment comment={comment}/>
+          </li>
+          )
+        }
+      </ul>
+      <aside style={hideCommentsStyle}
+        onClick={handleClick}>Hide Comments</aside>
+    </>
   )
+}
+
+const hideCommentsStyle = {
+  textAlign: 'center',
+  fontWeight: 'bold',
+  padding: 10,
+  color: 'grey'
 }
